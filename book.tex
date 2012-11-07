@@ -1,0 +1,300 @@
+% -*- coding: utf-8 -*-
+
+\documentclass[b5paper,papersize,tombow,11pt]{jsbook}
+
+\usepackage{amsmath,ascmac}
+\usepackage{graphicx}
+\usepackage{lettrine}
+\usepackage{fancyhdr}
+\usepackage{fancybox}
+\usepackage{listings}
+% Palatino
+\usepackage{palatino}
+
+%% Page Layout
+% B5: 182mm x 257mm
+\setlength{\voffset}{0mm}
+\setlength{\topmargin}{-15mm}
+\setlength{\textheight}{34\Cvs}
+\setlength{\textwidth}{\fullwidth}
+\setlength{\footskip}{10mm}
+
+% set margin for openleft
+% \setlength{\oddsidemargin}{-\oddsidemargin}
+% \setlength{\evensidemargin}{-\oddsidemargin}
+
+
+\pagestyle{fancy}
+
+\fancyhead{}
+% \fancyhead[RO,RE]{\rightmark}
+% \fancyhead[LE,LO]{\leftmark}
+\fancyhead[RO]{\rightmark}
+\fancyhead[LE]{\leftmark}
+\cfoot{\bfseries -- \thepage \ --} % page number at the center bottom
+\renewcommand{\headrule}{
+\vskip -1.5mm
+\hskip-0.03\textwidth\includegraphics[width=1.06\textwidth,height=3.78mm]{images/hrule.eps}
+\vskip -2.28mm
+}
+
+% jsbook.cls use 'plainhead' style for the first page of each chapter
+\fancypagestyle{plainhead}{
+\fancyhf{}
+\cfoot{\bfseries -- \thepage \ --}
+\renewcommand{\headrulewidth}{0.0pt}
+\renewcommand{\headrule}{}
+}
+
+% jsbook.cls use 'empty' style for blank
+\fancypagestyle{empty}{
+\fancyhf{}
+\cfoot{\bfseries -- \thepage \ --}
+\renewcommand{\headrulewidth}{0.0pt}
+\renewcommand{\headrule}{}
+}
+
+\makeatletter
+\renewcommand{\chapter}{%
+  \if@openright\cleardoublepage\else\clearpage\fi
+  \plainifnotempty % 元: \thispagestyle{plain}
+  \global\@topnum\z@
+  \if@english \@afterindentfalse \else \@afterindenttrue \fi
+  \secdef\@chapter\@schapter}
+\def\@chapter[#1]#2{%
+  \ifnum \c@secnumdepth >\m@ne
+    \if@mainmatter
+      \refstepcounter{chapter}%
+      \typeout{\@chapapp\thechapter\@chappos}%
+      \addcontentsline{toc}{chapter}%
+        {\protect\numberline
+        {\if@english\thechapter\else\@chapapp\thechapter\@chappos\fi}%
+        #1}%
+    \else\addcontentsline{toc}{chapter}{#1}\fi
+  \else
+    \addcontentsline{toc}{chapter}{#1}%
+  \fi
+  \chaptermark{#1}%
+  \addtocontents{lof}{\protect\addvspace{10\p@}}%
+  \addtocontents{lot}{\protect\addvspace{10\p@}}%
+  \if@twocolumn
+    \@topnewpage[\@makechapterhead{#2}]%
+  \else
+    \@makechapterhead{#2}%
+    \@afterheading
+  \fi}
+\def\@schapter#1{%
+  \chaptermark{#1}%
+  \if@twocolumn
+    \@topnewpage[\@makeschapterhead{#1}]%
+  \else
+    \@makeschapterhead{#1}\@afterheading
+  \fi}
+
+\def\@normalchapter[#1]#2{%
+  \ifnum \c@secnumdepth >\m@ne
+    \if@mainmatter
+      \refstepcounter{chapter}%
+      \typeout{\@chapapp\thechapter\@chappos}%
+      \addcontentsline{toc}{chapter}%
+        {\protect\numberline
+        {\if@english\thechapter\else\@chapapp\thechapter\@chappos\fi}%
+        #1}%
+    \else\addcontentsline{toc}{chapter}{#1}\fi
+  \else
+    \addcontentsline{toc}{chapter}{#1}%
+  \fi
+  \chaptermark{#1}%
+  \addtocontents{lof}{\protect\addvspace{10\p@}}%
+  \addtocontents{lot}{\protect\addvspace{10\p@}}%
+  \if@twocolumn
+    \@topnewpage[\@makechapterhead{#2}]%
+  \else
+    \@makechapterhead{#2}%
+    \@afterheading
+  \fi}
+\def\@normalschapter#1{%
+  \chaptermark{#1}%
+  \if@twocolumn
+    \@topnewpage[\@makeschapterhead{#1}]%
+  \else
+    \@makeschapterhead{#1}\@afterheading
+  \fi}
+\def\@makechapterhead#1{%
+  {\parindent \z@ \raggedright \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+      \if@mainmatter
+        \centering\huge\headfont \@chapapp\thechapter\@chappos
+        \par\nobreak
+        % \vskip \Cvs % 欧文は20pt
+      \fi
+    \fi
+    \interlinepenalty\@M
+    \begin{center}
+     {\LARGE \headfont #1}\par\nobreak\noindent
+\hskip-0.03\textwidth\includegraphics[width=1.06\textwidth,height=7.59mm]{images/chapter-title-ornament.eps}\vskip-7.59mm\vskip-0.5\Cvs
+    \end{center}
+    \par\nobreak
+    \vskip 1.000\Cvs}} % 欧文は40pt
+\def\@makeschapterhead#1{%
+  {\parindent \z@ \raggedright
+    \normalfont
+    \interlinepenalty\@M
+	\begin{center}
+    {\LARGE \headfont #1}\par\nobreak\noindent
+\hskip-0.03\textwidth\includegraphics[width=1.06\textwidth,height=7.59mm]{images/chapter-title-ornament.eps}\vskip-7.59mm\vskip-0.5\Cvs
+    \end{center}
+	\par\nobreak
+    \vskip 3\Cvs}} % 欧文は40pt
+
+% section
+% 後アキの調整
+\renewcommand{\section}{%
+  \if@slide\clearpage\fi
+  \@startsection{section}{1}{\z@}%
+  {\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ
+  {.7\Cvs \@plus.3\Cdp}% 後アキ
+  {\normalfont\Large\headfont\raggedright}}
+
+% 前・後アキの調整
+\renewcommand{\subsection}{\@startsection{subsection}{2}{\z@}%
+  {0.7\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ
+  {.25\Cvs \@plus.3\Cdp}% 後アキ
+  {\normalfont\large\headfont}}
+
+
+\makeatother
+
+\renewcommand{\prechaptername}{}
+\renewcommand{\postchaptername}{}
+
+\makeatletter
+\renewcommand{\thesection}{\S\,\@arabic\c@section}
+\makeatother
+
+\ifx\Cht\undefined
+ \newdimen\Cht\newdimen\Cdp
+ \setbox0\hbox{\char\jis2121}\Cht=\ht0\Cdp=\dp0\fi
+\makeatletter
+\long\def\linespace#1#2{\par\noindent
+  \dimen@=\baselineskip\multiply\dimen@ #1\advance\dimen@-\baselineskip
+  \advance\dimen@-\Cht\advance\dimen@\Cdp
+  \setbox0\vbox{\noindent #2}\advance\dimen@\ht0\advance\dimen@-\dp0%
+  \vtop to\z@{\hbox{\vrule width\z@ height\Cht depth\z@
+   \raise-.5\dimen@\hbox{\box0}}\vss}%
+  \dimen@=\baselineskip\multiply\dimen@ #1\advance\dimen@-\baselineskip
+  \vskip\dimen@}
+\makeatother
+
+\title{The Database Times Vol. 1}
+\date{2012/8/11}
+\author{Hotchpotch Society}
+
+\newcommand{\term}[2]{\noindent{\gt $\clubsuit$ #1}$\cdots$ #2}
+
+%% Listings
+\newcommand{\listingsize}{\small}
+\lstset{language=SQL,
+morekeywords={RETRIEVE,RANGE,OF,IS},
+numbers = left,
+numberstyle = {\tiny},
+numbersep = 5pt,
+breaklines = false,
+breakindent = 40pt,
+flexiblecolumns = true,
+keepspaces = false,
+basicstyle = \normalsize,
+identifierstyle = \itshape\listingsize,
+commentstyle = \fontfamily{ptm}\selectfont\listingsize,
+stringstyle = \upshape\listingsize,
+tabsize = 4,
+escapechar = |,
+}
+
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\frontmatter
+
+% タイトルページ
+\begin{center}
+ \includegraphics[width=12cm]{images/title.eps}
+ \par\vspace*{50mm}
+ \noindent Hotchpotch Society
+\end{center}
+
+% まえがきページ
+\input{preface}
+
+% 目次ページ
+\setcounter{tocdepth}{0} % show only chapters
+\tableofcontents
+
+\mainmatter
+
+\pagestyle{fancy}
+
+% 本文ここから
+\input{hayamiz-01}
+\input{hayamiz-02}
+% 本文ここまで
+
+
+\cleardoublepage
+\plainifnotempty
+\refstepcounter{chapter}
+\addcontentsline{toc}{chapter}
+{\protect 雑談}
+\chaptermark{雑談}
+
+\begin{center}
+ \includegraphics[width=3cm]{images/zatsudan.eps}
+\end{center}
+
+% 雑談ページ
+%
+% (<名前>) <内容> のフォーマットで各自適当なことを書くべし
+%
+
+\footnotesize
+
+\begin{itemize}
+ \item (はやみず) hogehoge
+\end{itemize}
+
+\normalsize
+
+\newpage
+
+\plainifnotempty
+
+\section*{著者紹介}
+
+\noindent {\gt ■ はやみず} \quad
+某研究施設にて、データベースシステムと戯れる日々を過ごしている。昔はLisp系
+言語に傾倒したり、マルチコア向け並列処理フレームワークの研究をしたりして
+いた。この本の首謀者。
+
+\vspace*{60mm}
+
+% 奥付
+\begin{center}
+ \includegraphics[width=8cm]{images/colophon.eps}
+ \par\vspace*{1mm}
+ \begin{tabular}{rl}
+  \hline
+  タイトル & The Database Times vol.2 \\
+  発行日 & 2012年12月31日 初版発行 \\
+  サークル & Hotchpotch Society \\
+  著者 & はやみず、(TODO: to be updated) \\
+  表紙デザイン & Eliza \\
+  連絡先 & {\it yuto+c83@hayamiz.com} \\
+  ウェブサイト & {\it http://hayamiz.com/\~{}hotchpotch/} \\
+  印刷所 & TODO: \\
+  \hline
+ \end{tabular}
+\end{center}
+
+\end{document}
