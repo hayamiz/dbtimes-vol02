@@ -1,5 +1,5 @@
 
-.SUBDIRS: digital
+.SUBDIRS:
 
 LATEX = platex -interaction=batchmode
 DVIPDFM = dvipdfmx

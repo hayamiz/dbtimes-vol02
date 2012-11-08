@@ -2,8 +2,7 @@
 .PHONY: check
 
 TIMESTAMP := $(shell date +%Y%m%d-%H%M%S)
-#PDFDIR := /home/haya/public_html/files/dbtimes-vol02
-PDFDIR := /tmp
+PDFDIR := /home/haya/public_html/files/dbtimes-vol02
 
 check:
 	platex -interaction=batchmode book.tex
