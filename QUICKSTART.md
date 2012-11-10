@@ -70,3 +70,8 @@ Windowsの人は，VirtualBoxで仮想環境にLinuxを入れるなり，気合�
 
 githubにpushされるたびに，Jenkinsが原稿をコンパイルして，エラーがないかチェックします。
  自分のコミットの結果にJenkins氏が腹を立てていないか， http://jenkins.hayamiz.com/job/dbtimes-vol02/ で確認しましょう。
+
+筆が進まないときは
+------------------
+
+`zatsudan.tex` に好き勝手なことを書いて気を紛らわせましょう。

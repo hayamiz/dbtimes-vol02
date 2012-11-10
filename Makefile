@@ -4,6 +4,9 @@
 TIMESTAMP := $(shell date +%Y%m%d-%H%M%S)
 PDFDIR := /home/haya/public_html/files/dbtimes-vol02
 
+book.pdf:
+	omake book.pdf
+
 check:
 	platex -interaction=batchmode book.tex
 	platex -interaction=batchmode book.tex
