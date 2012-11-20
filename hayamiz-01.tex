@@ -6,4 +6,52 @@
 はやみず
 \end{flushright}
 
-ぐぬぬ
+2009年，Web上にある記事が公開されて大きな話題を呼んだ。
+``MapReduce: A major step backwards'' と題されたその記事は，
+当時のクラウドコンピューティングブームを原動力として大流行していたMapReduceを痛烈に批判するものだった。
+日本語にするならば「MapReduce: 大きな技術的後退」となるだろうか。
+タイトルからして挑戦的であるが，その中身もかなり手厳しい。
+
+記事の中に要点のリストがあるので，拙訳とともに引用する：
+
+\begin{quote}
+\begin{enumerate}
+ \item A giant step backward in the programming paradigm for large-scale data intensive applications \\
+	   大規模データインテンシブアプリケーションにおけるプログラミングパラダイムの大いなる後退
+ \item A sub-optimal implementation, in that it uses brute force instead of indexing \\
+	   索引を使わない総当り方式の，およそ最善とは言いがたい実装
+ \item Not novel at all -- it represents a specific implementation of well known techniques developed nearly 25 years ago \\
+	   全く新規性に欠ける -- 25年近く前に開発された手法の限定的な実装でしかない
+ \item Missing most of the features that are routinely included in current DBMS \\
+	   現代のDBMSがごく当たり前に持っている機能の殆どが欠けている
+ \item Incompatible with all of the tools DBMS users have come to depend on \\
+	   DBMSユーザが使っているツールのほとんど全てと互換性がない
+\end{enumerate}
+\end{quote}
+
+この記事を書いた人は誰かというと，
+データベース界の超大御所 David J. DeWitt と Michael Stonebraker \footnote{RDBMSを世界で最初に実装したStonebrakerの功績は The Database Times vol.1 を参照のこと}\footnote{ちなみにこの2人とも，DB界で最も権威ある SIGMOD Edgar F. Codd 賞の受賞者である} である。
+そんな2人がこれだけけちょんけちょんに言うのだから，MapReduceはよっぽど酷いもののように思えるかもしれない。
+事実，この記事の指摘はある側面ではかなり的を得ている。
+
+しかし一方で，この記事は DeWitt と Stonebraker の壮大な負け惜しみでもあるのではないか，と私は思っている。
+
+\section{データベースの歴史はプログラマ解放戦争だった}
+
+Stonebrakerはリレーショナルデータベース(RDB)研究の先駆者であるが，
+その大元となるアイディアであるリレーショナルデータモデルは Edgar F. Codd により提唱されたものである。
+
+リレーショナルデータモデルの一番の目的は，
+データベースアプリケーションに関わるプログラマを``手続き''から解放することであった。
+
+Codd がリレーショナルデータモデルを提唱した時代には，
+データベースといえば階層型データベースと呼ばれるものが主流であった。
+階層型データベースでは，データが木構造で階層的に格納されており，
+データベースアプリケーションを作成する際には，
+プログラマが階層をたどる処理を1つ1つ実装してゆかなければならなかった。
+データの種類が追加されたときには，データを格納する階層構造も変化する。
+そのため，データベースアプリケーションのコードを新たな階層構造に合わせて修正してやる必要があった。
+
+
+\section{Big Dataの波に乗って}
+
