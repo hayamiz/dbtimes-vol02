@@ -11,6 +11,7 @@
 \usepackage{color}
 \usepackage{cite}
 \usepackage{setspace}
+\usepackage{plext}
 
 % \usepackage[default]{cantarell}
 \usepackage{iwona}
@@ -90,11 +91,8 @@
   \if@english \@afterindentfalse \else \@afterindenttrue \fi
   \secdef\@chapter\@schapter}
 \def\@chapter[#1]#2{%
-  \ifnum \c@secnumdepth >\m@ne
-    \addcontentsline{toc}{chapter}{#1}
-  \else
-    \addcontentsline{toc}{chapter}{#1}%
-  \fi
+  \refstepcounter{chapter}%
+  \addcontentsline{toc}{chapter}{#1}
   \chaptermark{#1}%
   \addtocontents{lof}{\protect\addvspace{10\p@}}%
   \addtocontents{lot}{\protect\addvspace{10\p@}}%
