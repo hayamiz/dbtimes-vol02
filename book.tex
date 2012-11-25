@@ -9,9 +9,12 @@
 \usepackage{fancybox}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{cite}
+\usepackage{setspace}
 
 % \usepackage[default]{cantarell}
 \usepackage{iwona}
+\renewcommand*\sfdefault{ugq}
 \usepackage[T1]{fontenc}
 
 \usepackage{euler}
@@ -34,12 +37,12 @@
 
 \fancyhead[LO]{}
 \fancyhead[RO]{
-{\sffamily\small \leftmark}
 \begin{picture}(0,0)(-3,0)
  \linethickness{12pt}
  \put(15,3.5){\line(1,0){80}}
  \linethickness{0pt}
- \put(15,3.5){\framebox(20,0){\textcolor{white}{\small \sffamily \thepage}}}
+ \put(15,3.5){\framebox(20,0){\textcolor{white}{\thepage}}}
+ \put(15,3.5){\framebox(20,0){\textcolor{white}{\fontfamily{ugq}\selectfont\small \thepage}}}
 \end{picture}
 }
 \fancyhead[LE]{
@@ -47,7 +50,7 @@
  \linethickness{12pt}
  \put(-95,3.5){\line(1,0){80}}
  \linethickness{0pt}
- \put(-35,3.5){\framebox(20,0){\textcolor{white}{\small \sffamily \thepage}}}
+ \put(-35,3.5){\framebox(20,0){\textcolor{white}{\fontfamily{ugq}\selectfont\small \thepage}}}
 \end{picture}
 }
 \fancyhead[RE]{}
@@ -62,7 +65,7 @@
  \linethickness{12pt}
  \put(15,3.5){\line(1,0){80}}
  \linethickness{0pt}
- \put(15,3.5){\framebox(20,0){\textcolor{white}{\small \sffamily \thepage}}}
+ \put(15,3.5){\framebox(20,0){\textcolor{white}{\fontfamily{ugq}\selectfont\small \thepage}}}
 \end{picture}
 }
 \fancyhead[LE]{
@@ -70,7 +73,7 @@
  \linethickness{12pt}
  \put(-95,3.5){\line(1,0){80}}
  \linethickness{0pt}
- \put(-35,3.5){\framebox(20,0){\textcolor{white}{\small \sffamily \thepage}}}
+ \put(-35,3.5){\framebox(20,0){\textcolor{white}{\fontfamily{ugq}\selectfont\small \thepage}}}
 \end{picture}
 }
 \fancyhead[RE]{}
@@ -88,14 +91,7 @@
   \secdef\@chapter\@schapter}
 \def\@chapter[#1]#2{%
   \ifnum \c@secnumdepth >\m@ne
-    \if@mainmatter
-      \refstepcounter{chapter}%
-      \typeout{\@chapapp\thechapter\@chappos}%
-      \addcontentsline{toc}{chapter}%
-        {\protect\numberline
-        {\if@english\thechapter\else\@chapapp\thechapter\@chappos\fi}%
-        #1}%
-    \else\addcontentsline{toc}{chapter}{#1}\fi
+    \addcontentsline{toc}{chapter}{#1}
   \else
     \addcontentsline{toc}{chapter}{#1}%
   \fi
@@ -103,9 +99,9 @@
   \addtocontents{lof}{\protect\addvspace{10\p@}}%
   \addtocontents{lot}{\protect\addvspace{10\p@}}%
   \if@twocolumn
-    \@topnewpage[\@makechapterhead{#2}]%
+    \@topnewpage[\@makeschapterhead{#2}]%
   \else
-    \@makechapterhead{#2}%
+    \@makeschapterhead{#2}%
     \@afterheading
   \fi}
 \def\@schapter#1{%
@@ -116,61 +112,17 @@
     \@makeschapterhead{#1}\@afterheading
   \fi}
 
-\def\@normalchapter[#1]#2{%
-  \ifnum \c@secnumdepth >\m@ne
-    \if@mainmatter
-      \refstepcounter{chapter}%
-      \typeout{\@chapapp\thechapter\@chappos}%
-      \addcontentsline{toc}{chapter}%
-        {\protect\numberline
-        {\if@english\thechapter\else\@chapapp\thechapter\@chappos\fi}%
-        #1}%
-    \else\addcontentsline{toc}{chapter}{#1}\fi
-  \else
-    \addcontentsline{toc}{chapter}{#1}%
-  \fi
-  \chaptermark{#1}%
-  \addtocontents{lof}{\protect\addvspace{10\p@}}%
-  \addtocontents{lot}{\protect\addvspace{10\p@}}%
-  \if@twocolumn
-    \@topnewpage[\@makechapterhead{#2}]%
-  \else
-    \@makechapterhead{#2}%
-    \@afterheading
-  \fi}
-\def\@normalschapter#1{%
-  \chaptermark{#1}%
-  \if@twocolumn
-    \@topnewpage[\@makeschapterhead{#1}]%
-  \else
-    \@makeschapterhead{#1}\@afterheading
-  \fi}
-\def\@makechapterhead#1{%
-  {\parindent \z@ \raggedright \normalfont
-    \ifnum \c@secnumdepth >\m@ne
-      \if@mainmatter
-        \centering\huge\headfont \@chapapp\thechapter\@chappos
-        \par\nobreak
-        % \vskip \Cvs % 欧文は20pt
-      \fi
-    \fi
-    \interlinepenalty\@M
-    \begin{center}
-     {\LARGE \headfont #1}\par\nobreak\noindent
-\hskip-0.03\textwidth\includegraphics[width=1.06\textwidth,height=7.59mm]{images/chapter-title-ornament.eps}\vskip-7.59mm\vskip-0.5\Cvs
-    \end{center}
-    \par\nobreak
-    \vskip 1.000\Cvs}} % 欧文は40pt
 \def\@makeschapterhead#1{%
   {\parindent \z@ \raggedright
     \normalfont
     \interlinepenalty\@M
-	\begin{center}
-    {\LARGE \headfont #1}\par\nobreak\noindent
-\hskip-0.03\textwidth\includegraphics[width=1.06\textwidth,height=7.59mm]{images/chapter-title-ornament.eps}\vskip-7.59mm\vskip-0.5\Cvs
-    \end{center}
-	\par\nobreak
-    \vskip 3\Cvs}} % 欧文は40pt
+	\begin{flushright}
+	 \begin{minipage}{0.9\textwidth}
+	 {\LARGE \headfont #1}
+	 \end{minipage}
+	\end{flushright}
+	\vskip-3\Cvs\includegraphics[width=10.0mm]{images/arrow.eps}\par\nobreak\noindent
+    \vskip 1.8\Cvs}} % 欧文は40pt
 
 % section
 % 後アキの調整
@@ -186,8 +138,6 @@
   {0.7\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ
   {.25\Cvs \@plus.3\Cdp}% 後アキ
   {\normalfont\large\headfont}}
-
-
 \makeatother
 
 \renewcommand{\prechaptername}{}
@@ -209,6 +159,14 @@
    \raise-.5\dimen@\hbox{\box0}}\vss}%
   \dimen@=\baselineskip\multiply\dimen@ #1\advance\dimen@-\baselineskip
   \vskip\dimen@}
+\makeatother
+
+\makeatletter %引用スタイルの変更
+\def\@cite#1{\textsuperscript{#1)}}
+\makeatother
+\makeatletter %参考文献リストの括弧を変更
+\def\@cite#1{\textsuperscript{#1)}}
+\renewcommand*{\@biblabel}[1]{#1)\hfill}%
 \makeatother
 
 \title{The Database Times vol.2}
@@ -267,8 +225,13 @@ escapechar = |,
 \input{momoko-01}
 % 本文ここまで
 
-\cleardoublepage
-\plainifnotempty
+\bibliographystyle{unsrt}
+\small
+\bibliography{book}
+\normalsize
+
+\newpage
+
 \refstepcounter{chapter}
 \addcontentsline{toc}{chapter}
 {\protect 雑談}
