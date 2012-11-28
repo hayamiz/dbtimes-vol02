@@ -1,0 +1,75 @@
+% -*- coding: utf-8 -*-
+% !TEX root =  book.tex
+
+\chapter{C言語、LLVM、クラウド。}
+% * (アスタリスク)付きの \chapter* コマンドは原則不可とする
+
+\begin{flushright}
+ hogelog
+\end{flushright}
+
+\section{あなたとわたしとC言語}
+1969年にOSを記述するためのプログラミング言語として産声をあげたC言語は圧倒的な勢いで普及し、
+現在に至ってもあらゆる場面で使われ続けている。
+そんな長い歴史を持ち世界中の今昔プログラマたちが使い続けてきた
+C言語には膨大なソフトウェア資産があるのだ。
+
+クールですばらしい現代的プログラミング言語処理系はいつだってそれらのソフトウェア資産を有効活用するかに苦心してきた。OSやライブラリなんてものはだいたいC言語で書かれているのでそれらの機能を使わないことには結局だいたい何もできない。
+C言語のライブラリを一番使うのが楽なのは当然C言語である。
+C言語がよく使われていること、
+それ自体がC言語がよく使われる理由となっているのだ。
+
+C++、Delphi、D言語といったネイティブコンパイル形式の
+プログラミング言語処理系はC言語の関数や構造体などを
+自然に扱うため、呼び出し規約や名前マングリングを
+C言語に合わせる機能を備えている。
+
+ネイティブコンパイルされない言語処理系によくあるアプローチはPerlのXSやRubyのネイティブ拡張、JavaのJNIのように、C言語によりその言語処理系に機能を追加するやり方だ。このやり方には大きな問題がある。例えばPerl処理系からとあるC言語のライブラリを扱いたい時は言語処理系とライブラリのつなぎ部分のコードをC言語で書かなければならない。言語処理系に組み込むためのコードなので、その言語処理系自体のソースコードも多少読み込まなければいけない。C言語で書きたくないからPerlを使っているのに、結局C言語をたくさん読み書きしなければいけない。これはあまり嬉しくない。
+
+% PythonのCython、LuaのLuabind、多種の言語に対応するSWIGなど、このような拡張機能の作成を支援するものも多い
+
+\subsection{Powered by libffi}
+C言語を書きたくない、けど気軽にC言語のライブラリを使いたい。
+Pythonのctypes、Rubyのffi、JavaのJNA、LuaのAlienなどはまさにその要求に応えるものだ。
+これらは実行時にC言語の構造体や関数へとアクセスできる機能を言語処理系に提供する。
+使いたいライブラリのインターフェースさえわかっていれば、非ネイティブコンパイル形式の
+言語処理系であってもまったくそのままC言語のライブラリが扱えるのだ。
+これらの機能はC言語の関数や構造体に実行時にアクセスする機能を提供する
+libffi
+というライブラリにより実現されている。
+libffiが成熟して
+様々なCPUアーキテクチャとOSに対応し
+各種言語処理系へ組み込まれ自然な形で
+C言語ライブラリを扱えるようになったことで、
+C言語とそれ以外の言語の距離はまた大幅に短くなったのだ。
+
+\subsection{Powered by LLVM}
+先に示したような方法でC言語の機能を活用できる言語処理系は最後の手段としてC言語が使える。仮にその言語の機能やライブラリに不足があってもC言語と混ぜ込んで使ってしまえばだいたいどんなアプリケーションでも作れてしまうのだ。
+それらのやり方が通じない、しかし非常に普及しているプログラミング言語実行環境がある。
+ブラウザ上で動作するFlashとJavaScript実行環境だ。
+
+% ActiveX, Google Native Client, PNaCl
+
+
+\subsection{FlashとC言語} % Adobe Flascc (Alchemy), Emscripten
+Last week, Scott Petersen from Adobe gave a talk at Mozilla on a toolchain he’s been creating--soon to be open-sourced--that allows C code to be targeted to the Tamarin virtual machine. Aside from being a really interesting piece of technology, I thought its implications for the web were pretty impressive.
+”先週AdobeのScott PetersonがMozillaに来て、彼が作っているCで書いたコードをTamarin VMコードにコンパイルするツールについて語ってくれたんだ。”
+2008年の7月、Mozillaで働くエンジニアAtul Varmaがとあるエントリを自身のブログに投稿した。
+http://www.toolness.com/wp/2008/07/running-c-and-python-code-on-the-web/
+
+% \section{人類とC言語}
+% "C言語、ああC言語、C言語。"
+% 
+% 俳聖として知られるかの松尾芭蕉がC言語あまりの美しさに詠んだとされる句である。
+% 
+% 人類の発展とともにあったC言語だが日常会話などには不向きだったためいつしか古代語として忘れ去られ、C言語話者は世の中から消え去っていた。C言語が1969年にAT\&Tベル研究所の考古学者デニス・リッチーが再発明するまで人類はC言語を忘れていたのだ。
+% 
+
+\section{実践編}
+なんかFlasccとEmscriptenの例とかを。
+
+\subsection{msgpack-flascc}
+
+\subsection{aobench-flascc}
+
+ねむい。
