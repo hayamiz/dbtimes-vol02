@@ -34,20 +34,19 @@
 
 \fancyhead[LO]{}
 \fancyhead[RO]{
-\begin{picture}(0,0)(-3,0)
+\begin{picture}(0,0)(0,0)
  \linethickness{12pt}
  \put(15,3.5){\line(1,0){80}}
  \linethickness{0pt}
- \put(15,3.5){\framebox(20,0){\textcolor{white}{\thepage}}}
  \put(15,3.5){\framebox(20,0){\textcolor{white}{\fontfamily{ugq}\selectfont\small \thepage}}}
 \end{picture}
 }
 \fancyhead[LE]{
-\begin{picture}(0,0)(3,0)
+\begin{picture}(0,0)(0,0)
  \linethickness{12pt}
- \put(-95,3.5){\line(1,0){80}}
+ \put(-92,3.5){\line(1,0){80}}
  \linethickness{0pt}
- \put(-35,3.5){\framebox(20,0){\textcolor{white}{\fontfamily{ugq}\selectfont\small \thepage}}}
+ \put(-32,3.5){\framebox(20,0){\textcolor{white}{\fontfamily{ugq}\selectfont\small \thepage}}}
 \end{picture}
 }
 \fancyhead[RE]{}
@@ -58,7 +57,7 @@
 \fancypagestyle{plainhead}{
 \fancyhead[LO]{}
 \fancyhead[RO]{
-\begin{picture}(0,0)(-3,0)
+\begin{picture}(0,0)(0,0)
  \linethickness{12pt}
  \put(15,3.5){\line(1,0){80}}
  \linethickness{0pt}
@@ -66,15 +65,25 @@
 \end{picture}
 }
 \fancyhead[LE]{
-\begin{picture}(0,0)(3,0)
+\begin{picture}(0,0)(0,0)
  \linethickness{12pt}
- \put(-95,3.5){\line(1,0){80}}
+ \put(-92,3.5){\line(1,0){80}}
  \linethickness{0pt}
- \put(-35,3.5){\framebox(20,0){\textcolor{white}{\fontfamily{ugq}\selectfont\small \thepage}}}
+ \put(-32,3.5){\framebox(20,0){\textcolor{white}{\fontfamily{ugq}\selectfont\small \thepage}}}
 \end{picture}
 }
 \fancyhead[RE]{}
 \fancyfoot{}
+\renewcommand{\headrulewidth}{0.0pt}
+\renewcommand{\headrule}{}
+}
+
+\fancypagestyle{fronthead}{
+\fancyhead[LO]{}
+\fancyhead[RO]{}
+\fancyhead[LE]{}
+\fancyhead[RE]{}
+\cfoot{-- \thepage --}
 \renewcommand{\headrulewidth}{0.0pt}
 \renewcommand{\headrule}{}
 }

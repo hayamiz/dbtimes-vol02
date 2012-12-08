@@ -16,7 +16,7 @@ clean:
   rm -f book-notombo.tex
   rm -f *.aux *.log *.bbl *.toc *.nav *.fls *.out *.snm *.vrb *.dvi *.blg
 
-clobber:
+clobber: clean
   rm -f *.pdf
 
 build: book.dvi book.pdf
@@ -51,5 +51,10 @@ book-notombo-ready.pdf: book-notombo.dvi book-notombo.pdf
 
 dbtimes-vol02-sample.pdf: book-notombo-ready.pdf
   pdftk A=cover-half-web.pdf B=$< cat A B1-10 output $@
+
+book.dvi: book.toc
+
+book.toc: book.tex
+  $(LATEX) $<
 
 .DEFAULT: build

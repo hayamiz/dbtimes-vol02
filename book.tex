@@ -33,7 +33,8 @@
 
 % タイトルページ
 \vspace*{50mm}
-\noindent\includegraphics[width=\textwidth]{images/title2.eps}
+\noindent
+\hskip-1inch\hskip\oddsidemargin\includegraphics[width=202mm]{images/title.eps}
 % \begin{center}
 %  \par\vspace*{50mm}
 %  \noindent {\fontfamily{iwona}\selectfont Hotchpotch Society}
@@ -42,9 +43,19 @@
 % まえがきページ
 \input{preface}
 
+\makeatletter
+\@openrightfalse
+\makeatother
+
 % 目次ページ
 \setcounter{tocdepth}{0} % show only chapters
 \tableofcontents
+
+\thispagestyle{fronthead}
+
+\makeatletter
+\@openrighttrue
+\makeatother
 
 \mainmatter
 
@@ -71,11 +82,7 @@
  \includegraphics[width=3cm]{images/zatsudan.eps}
 \end{center}
 
-\footnotesize
-
 \input{zatsudan}
-
-\normalsize
 
 \newpage
 
