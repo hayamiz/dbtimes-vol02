@@ -43,9 +43,19 @@
 % まえがきページ
 \input{preface}
 
+\makeatletter
+\@openrightfalse
+\makeatother
+
 % 目次ページ
 \setcounter{tocdepth}{0} % show only chapters
 \tableofcontents
+
+\thispagestyle{fronthead}
+
+\makeatletter
+\@openrighttrue
+\makeatother
 
 \mainmatter
 
