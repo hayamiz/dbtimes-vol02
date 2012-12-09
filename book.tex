@@ -2,6 +2,7 @@
 
 \documentclass[b5paper,papersize,tombow,10pt]{jsbook}
 
+\usepackage{okumacro}
 \usepackage{amsmath}
 \usepackage{ascmac}
 \usepackage{graphicx}
@@ -14,188 +15,16 @@
 \usepackage{setspace}
 \usepackage{plext}
 \usepackage{url}
-
-% \usepackage[default]{cantarell}
 \usepackage[T1]{fontenc}
-\renewcommand{\sfdefault}{phv}
-
 \usepackage{euler}
 
-%% Page Layout
-% B5: 182mm x 257mm
-\setlength{\voffset}{0mm}
-\setlength{\topmargin}{-23mm}
-\setlength{\headsep}{25pt}
-\setlength{\textheight}{36\Cvs}
-\setlength{\textwidth}{\fullwidth}
-\setlength{\footskip}{10mm}
-
-% set margin for openleft
-\setlength{\evensidemargin}{\oddsidemargin}
-%\addtolength{\evensidemargin}{-\textwidth}
-
-% \setlength{\oddsidemargin}{-\oddsidemargin}
-% \setlength{\evensidemargin}{-\oddsidemargin}
-
-
-\pagestyle{fancy}
-
-\fancyhead[LO]{}
-\fancyhead[RO]{
-\begin{picture}(0,0)(-3,0)
- \linethickness{12pt}
- \put(15,3.5){\line(1,0){80}}
- \linethickness{0pt}
- \put(15,3.5){\framebox(20,0){\textcolor{white}{\thepage}}}
- \put(15,3.5){\framebox(20,0){\textcolor{white}{\fontfamily{ugq}\selectfont\small \thepage}}}
-\end{picture}
-}
-\fancyhead[LE]{
-\begin{picture}(0,0)(3,0)
- \linethickness{12pt}
- \put(-95,3.5){\line(1,0){80}}
- \linethickness{0pt}
- \put(-35,3.5){\framebox(20,0){\textcolor{white}{\fontfamily{ugq}\selectfont\small \thepage}}}
-\end{picture}
-}
-\fancyhead[RE]{}
-\fancyfoot{}
-\renewcommand{\headrulewidth}{0.0pt}
-\renewcommand{\headrule}{}
-
-\fancypagestyle{plainhead}{
-\fancyhead[LO]{}
-\fancyhead[RO]{
-\begin{picture}(0,0)(-3,0)
- \linethickness{12pt}
- \put(15,3.5){\line(1,0){80}}
- \linethickness{0pt}
- \put(15,3.5){\framebox(20,0){\textcolor{white}{\fontfamily{ugq}\selectfont\small \thepage}}}
-\end{picture}
-}
-\fancyhead[LE]{
-\begin{picture}(0,0)(3,0)
- \linethickness{12pt}
- \put(-95,3.5){\line(1,0){80}}
- \linethickness{0pt}
- \put(-35,3.5){\framebox(20,0){\textcolor{white}{\fontfamily{ugq}\selectfont\small \thepage}}}
-\end{picture}
-}
-\fancyhead[RE]{}
-\fancyfoot{}
-\renewcommand{\headrulewidth}{0.0pt}
-\renewcommand{\headrule}{}
-}
-
-\makeatletter
-\renewcommand{\chapter}{%
-  \if@openright\cleardoublepage\else\clearpage\fi
-  \plainifnotempty % 元: \thispagestyle{plain}
-  \global\@topnum\z@
-  \if@english \@afterindentfalse \else \@afterindenttrue \fi
-  \secdef\@chapter\@schapter}
-\def\@chapter[#1]#2{%
-  \refstepcounter{chapter}%
-  \addcontentsline{toc}{chapter}{#1}
-  \chaptermark{#1}%
-  \addtocontents{lof}{\protect\addvspace{10\p@}}%
-  \addtocontents{lot}{\protect\addvspace{10\p@}}%
-  \if@twocolumn
-    \@topnewpage[\@makeschapterhead{#2}]%
-  \else
-    \@makeschapterhead{#2}%
-    \@afterheading
-  \fi}
-\def\@schapter#1{%
-  \chaptermark{#1}%
-  \if@twocolumn
-    \@topnewpage[\@makeschapterhead{#1}]%
-  \else
-    \@makeschapterhead{#1}\@afterheading
-  \fi}
-
-\def\@makeschapterhead#1{%
-  {\parindent \z@ \raggedright
-    \normalfont
-    \interlinepenalty\@M
-	\begin{flushright}
-	 \begin{minipage}{0.9\textwidth}
-	 {\LARGE \headfont #1}
-	 \end{minipage}
-	\end{flushright}
-	\vskip-3\Cvs\includegraphics[width=10.0mm]{images/arrow.eps}\par\nobreak\noindent
-    \vskip 1.8\Cvs}} % 欧文は40pt
-
-% section
-% 後アキの調整
-\renewcommand{\section}{%
-  \if@slide\clearpage\fi
-  \@startsection{section}{1}{\z@}%
-  {\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ
-  {.7\Cvs \@plus.3\Cdp}% 後アキ
-  {\normalfont\Large\headfont\raggedright}}
-
-% 前・後アキの調整
-\renewcommand{\subsection}{\@startsection{subsection}{2}{\z@}%
-  {0.7\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ
-  {.25\Cvs \@plus.3\Cdp}% 後アキ
-  {\normalfont\large\headfont}}
-\makeatother
-
-\renewcommand{\prechaptername}{}
-\renewcommand{\postchaptername}{}
-
-\makeatletter
-\renewcommand{\thesection}{\S\,\@arabic\c@section}
-\makeatother
-
-\ifx\Cht\undefined
- \newdimen\Cht\newdimen\Cdp
- \setbox0\hbox{\char\jis2121}\Cht=\ht0\Cdp=\dp0\fi
-\makeatletter
-\long\def\linespace#1#2{\par\noindent
-  \dimen@=\baselineskip\multiply\dimen@ #1\advance\dimen@-\baselineskip
-  \advance\dimen@-\Cht\advance\dimen@\Cdp
-  \setbox0\vbox{\noindent #2}\advance\dimen@\ht0\advance\dimen@-\dp0%
-  \vtop to\z@{\hbox{\vrule width\z@ height\Cht depth\z@
-   \raise-.5\dimen@\hbox{\box0}}\vss}%
-  \dimen@=\baselineskip\multiply\dimen@ #1\advance\dimen@-\baselineskip
-  \vskip\dimen@}
-\makeatother
-
-\makeatletter %引用スタイルの変更
-\def\@cite#1{\textsuperscript{#1)}}
-\makeatother
-\makeatletter %参考文献リストの括弧を変更
-\def\@cite#1{\textsuperscript{#1)}}
-\renewcommand*{\@biblabel}[1]{#1)\hfill}%
-\makeatother
+\input{preamble}
 
 \title{The Database Times vol.2}
 \date{2012/12/31}
 \author{Hotchpotch Society}
 
 \newcommand{\term}[2]{\noindent{\gt $\clubsuit$ #1}$\cdots$ #2}
-
-%% Listings
-\newcommand{\listingsize}{\small}
-\lstset{language=SQL,
-morekeywords={RETRIEVE,RANGE,OF,IS},
-numbers = left,
-numberstyle = {\tiny},
-numbersep = 5pt,
-breaklines = false,
-breakindent = 40pt,
-flexiblecolumns = true,
-keepspaces = false,
-basicstyle = \normalsize,
-identifierstyle = \itshape\listingsize,
-commentstyle = \fontfamily{ptm}\selectfont\listingsize,
-stringstyle = \upshape\listingsize,
-tabsize = 4,
-escapechar = |,
-}
-
 
 \begin{document}
 
@@ -205,7 +34,8 @@ escapechar = |,
 
 % タイトルページ
 \vspace*{50mm}
-\noindent\includegraphics[width=\textwidth]{images/title2.eps}
+\noindent
+\hskip-1inch\hskip\oddsidemargin\includegraphics[width=202mm]{images/title.eps}
 % \begin{center}
 %  \par\vspace*{50mm}
 %  \noindent {\fontfamily{iwona}\selectfont Hotchpotch Society}
@@ -214,9 +44,19 @@ escapechar = |,
 % まえがきページ
 \input{preface}
 
+\makeatletter
+\@openrightfalse
+\makeatother
+
 % 目次ページ
 \setcounter{tocdepth}{0} % show only chapters
 \tableofcontents
+
+\thispagestyle{fronthead}
+
+\makeatletter
+\@openrighttrue
+\makeatother
 
 \mainmatter
 
@@ -243,11 +83,7 @@ escapechar = |,
  \includegraphics[width=3cm]{images/zatsudan.eps}
 \end{center}
 
-\footnotesize
-
 \input{zatsudan}
-
-\normalsize
 
 \newpage
 
@@ -255,27 +91,30 @@ escapechar = |,
 
 \section*{著者紹介}
 
-\noindent {\gt ■ はやみず} \quad
+\noindent {\headfont ■ はやみず} \quad
 この本の首謀者。某研究施設にて、データベースシステムと戯れる日々を過ごしている。
 最近テンピュールのベッドを買った。
 
-\noindent {\gt ■ suu-g} \quad
+\noindent {\headfont ■ suu-g} \quad
+PaaS の裏側で働くようせいさんの一員。低度にクラウド化していて実体は不明。
+最近高級歯磨き粉に手を出したが、違いはわからない。DNS は趣味。
+
+\noindent {\headfont ■ 前佛 雅人} \quad
+とあるホスティング業者のインフラエンジニア的な運用サポートを生業とする。
+ioDriveと戯れながらも、ソーシャルゲームのインフラ運用支援に命を削っている。
+密かに稲作農家。
+人生はクラウド。厨二病でも恋がしたい！
+
+\noindent {\headfont ■ 早水 桃子} \quad
 あ。
 
-\noindent {\gt ■ 前佛 雅人} \quad
-あ。
-
-\noindent {\gt ■ 早水 桃子} \quad
-あ。
-
-\noindent {\gt ■ hogelog} \quad
+\noindent {\headfont ■ hogelog} \quad
 最近渋谷によく行きます。
 
-\noindent {\gt ■ yuyarin} \quad
+\noindent {\headfont ■ yuyarin} \quad
 あ。
 
-
-\vspace*{15\Cvs}
+\vspace*{12\Cvs}
 
 % 奥付
 \begin{center}
@@ -285,7 +124,7 @@ escapechar = |,
   タイトル & The Database Times vol.2 \\
   発行日 & 2012年12月31日 初版発行 \\
   サークル & Hotchpotch Society \\
-  著者 & はやみず、(TODO: to be updated) \\
+  著者 & はやみず、suu-g、前佛 雅人、早水 桃子、hogelog、yuyarin \\
   表紙デザイン & 早水 桃子 \\
   連絡先 & \url{yuto+c83@hayamiz.com} \\
   ウェブサイト & \url{http://hayamiz.com/~hotchpotch/} \\
