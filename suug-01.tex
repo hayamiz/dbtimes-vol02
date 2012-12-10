@@ -63,16 +63,56 @@ Alice に送ることができたなら、攻撃は成立します。
 \subsection{パケットの偽造}
 DNSの脆弱性は、基本的にはそれがUDPの上で動いていることに起因します。
 
-% TODO: ここにUDPパケットフォーマットの図
-% TODO: ここにDNSパケットフォーマットの図
+\begin{figure}[hbt]
+{\scriptsize
+\begin{verbatim}
+                                    
+                  0      7 8     15 16    23 24    31  
+                 +--------+--------+--------+--------+ 
+                 |     Source      |   Destination   | 
+                 |      Port       |      Port       | 
+                 +--------+--------+--------+--------+ 
+                 |                 |                 | 
+                 |     Length      |    Checksum     | 
+                 +--------+--------+--------+--------+ 
+\end{verbatim}
+}
+\caption{UDP Header Format}
+\label{UDPHeader}
+\end{figure}
+
+\begin{figure}[hbt]
+{\scriptsize
+\begin{verbatim}
+
+                                    1  1  1  1  1  1
+      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                      ID                       |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |QR|   Opcode  |AA|TC|RD|RA|   Z    |   RCODE   |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                    QDCOUNT                    |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                    ANCOUNT                    |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                    NSCOUNT                    |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                    ARCOUNT                    |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+\end{verbatim}
+}
+\caption{DNS Header Format}
+\label{DNSHeader}
+\end{figure}
+
 
 UDP パケットは RFC768 \footnote{http://tools.ietf.org/html/rfc768}
 で定義されているように、ポート番号(16bit)と長さ・チェックサムしかない
-極めて簡素なパケットです。
-またDNSパケットのヘッダフォーマットは RFC 1035 \footnote{何度かアップ
-デートもありますが、今回の範囲内では 1035 で十分} にあります。
-DNS パケットには、クエリ自体に関する情報以外に 16bit の Query ID が
-入っています。
+極めて簡素なパケットです（図\ref{UDPHeader}）。
+またDNSパケットのヘッダフォーマットは RFC 1035 \footnote{http://tools.ietf.org/html/rfc1035} 
+にあります。
+DNS パケットには、クエリ自体に関する情報以外に 16bit の Query ID が入っています（図\ref{DNSHeader}）。
 
 DNSのパケットを偽造する際には、Destination Port Number 及びDNS Query
 ID を偽装しさえすれば、攻撃対象のサーバに受け付けられるパケットになります。
