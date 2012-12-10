@@ -170,6 +170,29 @@ $ whois -h whois.radb.net 1.1.1.0/24
 \end{minilinespace}
 \end{quote}
 
+
+\subsection{IRRの構造}
+
+IRRにはいくつかの種類のクラスが定義されていて、それらをオブジェクトとして登録していくことで成り立っている。
+RFC2622/4012では、
+route, route6, aut-num, as-set, route-set filter-set rtr-set peering-set inet-rtr, mntner, role, person
+といったクラスが定義されている。このうち今回は特によく利用されているaut-num, route, as-setについて紹介する。
+百聞は一見にしかずなので登録されているデータを見て頂きたい。
+
+\subsubsection{aut-numクラス}
+aut-numクラスはASを表現したクラスでASという接頭辞の後にAS番号を続けたものをキーに使う。
+大体の属性値は見ていただければわかると思うが、特筆したいのが、export/import属性である。
+この属性には肝心要のルーティングポリシーを記述することができる。
+importの例では、AS-NSPIXP2（これは後述のAS-SETオブジェクト）に含まれるASから広告されるに対して、
+経路のpreferenceを100にしながらすべての経路を受け入れるというポリシーを記述している。
+一方でAS2501からの経路に対してはAS2501とAS7531の2つのASがOriginである経路しか受け入れない。
+exportの例ではAS2504に対してAS7660を除くすべての経路を広告するというポリシーを記述している。
+
+この例はAS2500のWIDE Projectという日本の研究機関のASのものであるが、
+先に述べたようにASの接続関係は接続性の売り買いの話につながるため、
+ポリシーがオープンなコンテンツプロバイダや研究機関を除いた商用のISPなどで、
+ここまで細かく記述されていることは滅多に見かけない。
+
 \begin{tabular}{l}
 \begin{itembox}[c]{aut-numオブジェクト}
 \begin{quote}
@@ -242,28 +265,6 @@ source:  JPIRR
 \end{itembox}
 
 \end{tabular}
-
-\subsection{IRRの構造}
-
-IRRにはいくつかの種類のクラスが定義されていて、それらをオブジェクトとして登録していくことで成り立っている。
-RFC2622/4012では、
-route, route6, aut-num, as-set, route-set filter-set rtr-set peering-set inet-rtr, mntner, role, person
-といったクラスが定義されている。このうち今回は特によく利用されているaut-num, route, as-setについて紹介する。
-百聞は一見にしかずなので登録されているデータを見て頂きたい。
-
-\subsubsection{aut-numクラス}
-aut-numクラスはASを表現したクラスでASという接頭辞の後にAS番号を続けたものをキーに使う。
-大体の属性値は見ていただければわかると思うが、特筆したいのが、export/import属性である。
-この属性には肝心要のルーティングポリシーを記述することができる。
-importの例では、AS-NSPIXP2（これは後述のAS-SETオブジェクト）に含まれるASから広告されるに対して、
-経路のpreferenceを100にしながらすべての経路を受け入れるというポリシーを記述している。
-一方でAS2501からの経路に対してはAS2501とAS7531の2つのASがOriginである経路しか受け入れない。
-exportの例ではAS2504に対してAS7660を除くすべての経路を広告するというポリシーを記述している。
-
-この例はAS2500のWIDE Projectという日本の研究機関のASのものであるが、
-先に述べたようにASの接続関係は接続性の売り買いの話につながるため、
-ポリシーがオープンなコンテンツプロバイダや研究機関を除いた商用のISPなどで、
-ここまで細かく記述されていることは滅多に見かけない。
 
 \subsubsection{routeクラス}
 routeクラスは経路情報を表現したクラスで、広告されるプレフィックスをroute属性に使う。
