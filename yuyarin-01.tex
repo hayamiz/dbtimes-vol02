@@ -95,7 +95,7 @@ AS間の関係には大きく分けて上下関係のトランジット(transit)
 そのため、自ASが新しく経路広告を行うときは隣接ASにそれを伝えてフィルタを開けてもらわなければいけいない。
 これにはメールが使われていることが多いが、隣接ASが自ASの経路を広告している場合は、さらにその隣接ASにもフィルタを空けてもらう必要がある。
 このようなケースはトランジットで起こりうるのだが、最上位のTier 1の労力は半端なものではない。
-AS RankによればAS2914は全世界の約1/3の13,242の子ASを抱えて156,530のIPv4の経路を広告している。
+AS Rank\footnote{http://as-rank.caida.org/}によればAS2914は全世界の約1/3の13,242の子ASを抱えて156,530のIPv4の経路を広告している。
 人手のかかるメールなんかではやってられないので、経路情報をデータベース化して自動的にフィルタを生成して反映される仕組みが必要になってくる。
 
 \section{資源管理と経路ハイジャック}
@@ -155,7 +155,7 @@ Internet Registryが権威的な資源管理をするデータベースを持つ
 最終的に1999年にRFC2622 Routing Policy Specification Language (RPSL)として標準化され、RFC4012でIPv6用の拡張が行われ現在に至っている。
 
 IRRではwhoisをプロトコルに使っているためクライアントにはwhoisコマンドを利用することができる。
-サーバの実装はRIPE NCCのRIPE DB ServerとMeritのIRRdの２つがメジャーである。
+サーバの実装はRIPE NCCのRIPE DB ServerとMeritのIRRd\footnote{http://www.irrd.net/}の２つがメジャーである。
 
 \newenvironment{minilinespace}{
 \baselineskip = 4mm
@@ -227,7 +227,8 @@ descr:   ASes advertised by OCN
 members: AS4713,
          AS290,   AS1628,  AS2499,  AS2506,  AS2509,
          AS2515,  AS2518,  AS2526,  AS4680,  AS4683,
-         (55 lines snipped)
+         (54 lines snipped)
+         AS55956, AS58531, AS58645, AS58647, AS131078,
          AS131154, AS131154, AS131155, AS132095, AS132119
 admin-c: Ichiro Mizukoshi
 tech-c:  Tomoya Yoshida
@@ -298,16 +299,15 @@ NTTCOMはJPNICのJPIRRをミラーしているが、JPIRRはNTTCOMをミラー�
 
 \subsection{IRRが必要とされる場面}
 
-IRRは任意加入のデータベースだが、利用を迫られる時がある。
-基本的には経路フィルタの自動生成を行うためにIRRが使われる。
+IRRは任意で使えばいいデータベースではあるが、利用を迫られる時もある。
+基本的には他のASにおいて経路フィルタの自動生成を行うためにIRRが使われる。
 
 例えばNTTCOMやLEVEL3のようなTier1トランジット(ISPのためのISP)では経路フィルタ適用などの運用を簡略化するために、
 顧客に対して自身のIRRに経路情報を登録することを求めている\footnote{http://www.us.ntt.net/support/policy/rr.cfm}。
 また同様の理由で他のASに対してピアを張るための条件としてIRRの登録を求めるASも存在する。
 他にもIX(Internet Exchange)でroute serverを使ってmulti lateral peeringを行う際の経路フィルタの登録などにも利用される。
 
-フィルタの生成の他には経路情報からコンタクトパーソンを見つけるためや、
-障害時のトポロジー把握などに使われる。
+それ以外では、フィルタの生成の他には経路情報からコンタクトパーソンを見つけるためや、障害時のトポロジー把握などに使われる。
 
 \section{IRRの歩き方}
 
@@ -329,7 +329,7 @@ C
 \end{minilinespace}
 \end{quote}
 
-AS-SETをASの一覧に展開したいときは!iオプションを使う。AS-SETの中にAS-SETが含まれるような場合は,1をつけてAS-SETの再帰展開を行う。
+AS-SETをASの一覧に展開したいときは!iオプションを使う。AS-SETの中にAS-SETが含まれるような場合は,1をつければAS-SETの再帰展開を行うことができる。
 
 \begin{quote}
 \begin{minilinespace}
@@ -342,7 +342,8 @@ C
 \end{minilinespace}
 \end{quote}
 
-AS7521がメンテナになっているオブジェクトを列挙する。だいたいこのあとに属性でgrepをかける。
+指定したASがメンテナになっているオブジェクトを列挙する場合は!oオプションを使う。
+だいたいこの出力に属性名でgrepをかけて整形して利用する。
 
 \begin{quote}
 \begin{minilinespace}
@@ -352,15 +353,18 @@ A10130
 route:      210.173.160.0/19
 descr:      INTERNET MULTIFEED CO.
 (snip)
+aut-num:    AS7521
+as-name:    MFEED
+(snip)
 source:     JPIRR
 C
 \end{verbatim}
 \end{minilinespace}
 \end{quote}
 
-AS7521の情報でsourceがJPIRRのものだけを選択する。sourceによっては情報が間違っていたりすることがあるので、
-情報の信頼性の高いsourceを指定したくなる場合がある。
-ダブルクオーテーションで囲ってwhoisのオプションに間違われないようにする。
+sourceによっては情報が間違っていたりすることがあるので、情報の信頼性の高いsourceだけを指定したくなる場合がある。
+その際には-sオプションを利用して特定のsourceのオブジェクトを取り出す。
+ただしダブルクオーテーションで囲ってwhoisのオプションに間違われないようにする。
 
 \begin{quote}
 \begin{minilinespace}
@@ -394,6 +398,7 @@ src/peval/peval "as-ocn and as-iij"
 \end{quote}
 
 RtConfigはCiscoやJuniperのルータ用のフィルタやstatic routeを生成することができるツールである。
+下の例ではciscoとJuniperのprefixリストを生成している。
 
 \begin{quote}
 \begin{minilinespace}
@@ -445,11 +450,11 @@ IRS23における発表では月2.75件の経路ハイジャックが起きて�
 経路ハイジャックの検知まで出来るようになって、一見、完璧で幸福なシステムが出来上がったかのように思える。
 しかしながらIRRは幾つかの問題を10年以上に渡り未だに抱えている。
 
-まずは１つは乱立するIRRと網羅性の問題である。
+まずはは乱立するIRRと網羅性の問題である。
 1999年半ばにMeritがIRRdのソフトウェアを配布した後、RADbは有料化されてしまったため、
 ISPなどが各々でIRRを立てることになってしまい、情報が分散してしまった。
 過去最高59個のIRRが地球上に存在したことがある。
-これによってどこかのIRRにしかない経路や、管理が放置されて別のIRRだと情報が古くなってる経路などが出てきた。
+これによって一部のIRRにしかない経路や、管理が放置されて古くなってしまった経路情報などが出てきた。
 利用者としてもどのIRRに情報を登録すればいいのか考えなくてはならない。
 
 次に情報の正確性の問題である。
@@ -471,3 +476,7 @@ Altdbなどは運営者が不慮の事故により他界されたため、昔
 それによって経路奉行のような経路ハイジャック検知を可能としている。
 
 このようにインターネットの幸福のために頑張ってデータベースを運用している人たちのこと、時々でいいから思い出してください。
+
+\begin{flushright}
+おわり
+\end{flushright}
