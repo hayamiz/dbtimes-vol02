@@ -9,12 +9,16 @@
 \end{flushright}
 
 \section{あなたとわたしとC言語}
-1969年にOSを記述するためのプログラミング言語として産声をあげたC言語は圧倒的な勢いで普及し、
+1969年にOSを記述するためのプログラミング言語として
+産声をあげたC言語は圧倒的な勢いで普及し、
 現在に至ってもあらゆる場面で使われ続けている。
 そんな長い歴史を持ち世界中の今昔プログラマたちが使い続けてきた
 C言語には膨大なソフトウェア資産があるのだ。
 
-クールですばらしい現代的プログラミング言語処理系はいつだってそれらのソフトウェア資産を有効活用するかに苦心してきた。OSやライブラリなんてものはだいたいC言語で書かれているのでそれらの機能を使わないことには結局だいたい何もできない。
+クールですばらしい現代的プログラミング言語処理系は
+いつだってそれらC言語のソフトウェア資産を有効活用するかに苦心してきた。
+OSやライブラリなんてものはだいたいC言語で書かれているので
+それらの機能を使わないことには結局だいたい何もできない。
 C言語のライブラリを一番使うのが楽なのは当然C言語である。
 C言語がよく使われていること、
 それ自体がC言語がよく使われる理由となっているのだ。
@@ -24,13 +28,24 @@ C++、Delphi、D言語といったネイティブコンパイル形式の
 自然に扱うため、呼び出し規約や名前マングリングを
 C言語に合わせる機能を備えている。
 
-ネイティブコンパイルされない言語処理系によくあるアプローチはPerlのXSやRubyのネイティブ拡張、JavaのJNIのように、C言語によりその言語処理系に機能を追加するやり方だ。このやり方には大きな問題がある。例えばPerl処理系からとあるC言語のライブラリを扱いたい時は言語処理系とライブラリのつなぎ部分のコードをC言語で書かなければならない。言語処理系に組み込むためのコードなので、その言語処理系自体のソースコードも多少読み込まなければいけない。C言語で書きたくないからPerlを使っているのに、結局C言語をたくさん読み書きしなければいけない。これはあまり嬉しくない。
-
-% PythonのCython、LuaのLuabind、多種の言語に対応するSWIGなど、このような拡張機能の作成を支援するものも多い
+ネイティブコンパイルされない言語処理系によくある
+アプローチはPerlのXSやRubyのネイティブ拡張、JavaのJNIのように、
+C言語でその言語処理系の機能を拡張するやり方だ。
+このやり方には大きな問題がある。
+例えばPerl処理系からとあるC言語のライブラリを扱いたい時は
+言語処理系とライブラリのつなぎ部分のコードをC言語で書かなければならない。
+その言語処理系自体のソースコードも読み込まなければいけない。
+C言語で書きたくないからPerlを使っているのに、結局C言語をたくさん読み書きしなければいけない。
+C言語のライブラリを使いたいんだからC言語で書けと言われればそれまでかもしれないけど、
+もうちょっと楽もしたい。
+\footnote{
+PythonのCython、LuaのLuabind、多種の言語に対応するSWIGなど、
+C言語ライブラリのバインディング作成を支援するツールも多い。}
 
 \subsection{Powered by libffi}
 C言語を書きたくない、けど気軽にC言語のライブラリを使いたい。
-Pythonのctypes、Rubyのffi、JavaのJNA、LuaのAlienなどはまさにその要求に応えるものだ。
+Pythonのctypes、Rubyのffi、JavaのJNA、LuaのAlien、Mozillaのjs-ctypesなどは
+まさにその要求に応えるものだ。
 これらは実行時にC言語の構造体や関数へとアクセスできる機能を言語処理系に提供する。
 使いたいライブラリのインターフェースさえわかっていれば、非ネイティブコンパイル形式の
 言語処理系であってもまったくそのままC言語のライブラリが扱えるのだ。
@@ -38,24 +53,70 @@ Pythonのctypes、Rubyのffi、JavaのJNA、LuaのAlienなどはまさにその�
 libffi
 というライブラリにより実現されている。
 libffiが成熟して
-様々なCPUアーキテクチャとOSに対応し
-各種言語処理系へ組み込まれ自然な形で
-C言語ライブラリを扱えるようになったことで、
-C言語とそれ以外の言語の距離はまた大幅に短くなったのだ。
+様々なCPUアーキテクチャとOSに対応した現在、
+自然な形でC言語ライブラリを扱える
+言語処理系が多い。
+それまでネイティブコンパイル形式の処理系にしかできなかった
+ところまでもRubyやPythonといった言語で
+書けることを喜ぶ人は、どうやら多いようだ。
 
 \subsection{Powered by LLVM}
-先に示したような方法でC言語の機能を活用できる言語処理系は最後の手段としてC言語が使える。仮にその言語の機能やライブラリに不足があってもC言語と混ぜ込んで使ってしまえばだいたいどんなアプリケーションでも作れてしまうのだ。
+先に示したような方法でC言語の機能を活用できる言語処理系は
+仮にその言語の機能やライブラリに不足があっても、
+C言語と混ぜ込んで使ってしまえばだいたいどんなアプリケーションでも作れてしまう。
 それらのやり方が通じない、しかし非常に普及しているプログラミング言語実行環境がある。
 ブラウザ上で動作するFlashとJavaScript実行環境だ。
+Flash・JavaScript環境ではネイティブ環境にアクセスすることは
+基本的に許可されていない。
+%標準ライブラリ・サードパティライブラリ共に巨大な
+%Java環境ですら、
+%時にはC言語ライブラリの助けを必要とするのだ。
+
+「ブラウザ内で、ポータブルに動作する」という
+得難い特性のため、
+当初の目的をこえて
+巨大なアプリケーションが作られるように
+なってきた両環境で
+膨大な既存のC言語ライブラリが扱えたら
+どれほど可能性が広がるだろうか。
+そしてそれは全く夢物語などではないし、
+もはや現実的な選択肢としてそこにある。
 
 % ActiveX, Google Native Client, PNaCl
 
+\subsection{Powered by LLVM} % Adobe Flascc (Alchemy), Emscripten
+%Last week, Scott Petersen from Adobe gave a talk at Mozilla on a toolchain he’s been creating--soon to be open-sourced--that allows C code to be targeted to the Tamarin virtual machine.
+%``先週AdobeのScott PetersonがMozillaに来て、彼が作っているCで書いたコードをTamarin VMコードにコンパイルするツールについて語ってくれたんだ。''
+2008年の7月、Mozillaで働くエンジニアAtul Varmaが
+AdobeのScott Petersenが作ったツール
+についてのエントリを自身のブログに投稿した。
+\footnote{\url{http://www.toolness.com/wp/2008/07/running-c-and-python-code-on-the-web/}}
+----後にAdobe Alchemy、そしてAdobe Flasccと名前を変え
+Adobe Flashの主力機能の一つとして語られるようになるツールの世間への初めての露出である。
+このツールはC言語かC++で書かれたプログラムを
+AVM2(Actionscript Virtual Machine 2)のバイトコードへと変換し、
+ActionScriptからその機能を使えるようにするツールである。
+このツールによりFlashはC言語の豊富な資源を使えるようになった。
+同様にC言語、C++で記述されたプログラムをJavaScriptへと変換する
+Emscriptenというツールも存在する。
+これらのツールはどちらもLLVMコンパイラにより一旦
+C言語、C++のコードをLLVMバイトコードにコンパイルし、
+そのLLVMバイトコードから目的とするコードへとコンパイルするツールである。
+LLVMを利用することで複雑で難しい高水準な言語ではなく、
+単純で扱いやすいLLVMバイトコードから目的とするコードを生成することができる。
+LLVMというオープンなコンパイラ基盤が成熟した現在だからこそ生まれてきたツールなのである。
+これらのツールを用いることで
+例えばブラウザ上でPython, Ruby, Luaのようなプログラミング言語処理系そのものを
+動かすこともできるし、音声合成や画像認識のような高度な機能を
+ウェブアプリケーションに組み込むことも可能である。
+C言語の豊富なソフトウェア資産はここにきて
+Flash、ブラウザJavaScript環境をもその活躍の舞台を広げたのである。
 
-\subsection{FlashとC言語} % Adobe Flascc (Alchemy), Emscripten
-Last week, Scott Petersen from Adobe gave a talk at Mozilla on a toolchain he’s been creating--soon to be open-sourced--that allows C code to be targeted to the Tamarin virtual machine. Aside from being a really interesting piece of technology, I thought its implications for the web were pretty impressive.
-”先週AdobeのScott PetersonがMozillaに来て、彼が作っているCで書いたコードをTamarin VMコードにコンパイルするツールについて語ってくれたんだ。”
-2008年の7月、Mozillaで働くエンジニアAtul Varmaがとあるエントリを自身のブログに投稿した。
-http://www.toolness.com/wp/2008/07/running-c-and-python-code-on-the-web/
+\subsection{クラウド時代のC言語}
+クラウド時代と呼ばれる現代、ソフトウェアは様々な環境で動作する。
+汎用コンピュータ環境、Android環境、iOS環境、Flash環境、ブラウザJavaScript環境、
+マイコン、他諸々。
+そんな様々な環境で動作する言語はC言語以外には、まだない。
 
 % \section{人類とC言語}
 % "C言語、ああC言語、C言語。"
@@ -65,11 +126,12 @@ http://www.toolness.com/wp/2008/07/running-c-and-python-code-on-the-web/
 % 人類の発展とともにあったC言語だが日常会話などには不向きだったためいつしか古代語として忘れ去られ、C言語話者は世の中から消え去っていた。C言語が1969年にAT\&Tベル研究所の考古学者デニス・リッチーが再発明するまで人類はC言語を忘れていたのだ。
 % 
 
-\section{実践編}
-なんかFlasccとEmscriptenの例とかを。
+% さらば実践編
+%\section{実践編}
+%なんかFlasccとEmscriptenの例とかを。
 
-\subsection{msgpack-flascc}
+%\subsection{msgpack-flascc}
 
-\subsection{aobench-flascc}
+%\subsection{aobench-flascc}
 
-ねむい。
+%ねむい。
