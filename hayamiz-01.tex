@@ -42,7 +42,7 @@ MapReduce以外のフレームワークでデータ処理を行うことも可�
  \item A giant step backward in the programming paradigm for large-scale data intensive applications \\
 	   大規模データインテンシブアプリケーションにおけるプログラミングパラダイムの大いなる後退
  \item A sub-optimal implementation, in that it uses brute force instead of indexing \\
-	   索引を使わない総当り方式の，およそ最善とは言いがたい実装
+	   索引を使わない総当たり方式の，およそ最善とは言いがたい実装
  \item Not novel at all -- it represents a specific implementation of well known techniques developed nearly 25 years ago \\
 	   全く新規性に欠ける -- 25年近く前に開発された手法の限定的な実装でしかない
  \item Missing most of the features that are routinely included in current DBMS \\
@@ -86,7 +86,7 @@ MapReduceが世に広く受け入れられている状況は，
 
  たとえばデータベース史を振り返ると，
  Edgar F. Coddが提唱し，
- Michael Stonebraker がINGRESプロジェクトで世界で初めて実装したリレーショナルデータベースは，
+ Michael Stonebraker が初めて実装したリレーショナルデータベースINGRESは，
  当時のデータベース業界の巨人であるIBMからはまさにオモチャ扱いされていました。
  リレーショナルデータベースを提唱したCoddがIBMの研究者であったのは歴史の皮肉ともいえるでしょう。
  メインフレームマシンに階層型データベースが主流である時代に，
@@ -191,7 +191,7 @@ Hadoopクラスタの上で動作させる形とはなっていますが，
 \begin{quote}
 \begin{enumerate}
  \item 大規模データインテンシブアプリケーションにおけるプログラミングパラダイムの大いなる後退
- \item 索引を使わない総当り方式の，およそ最善とは言いがたい実装
+ \item 索引を使わない総当たり方式の，およそ最善とは言いがたい実装
  \item 全く新規性に欠ける -- 25年近く前に開発された手法の限定的な実装でしかない
  \item 現代のDBMSがごく当たり前に持っている機能の殆どが欠けている
  \item DBMSユーザが使っているツールのほとんど全てと互換性がない
@@ -208,7 +208,7 @@ Hadoopが上記の欠点を抱えているということは間違いありま�
 そして様々な製品が生み出されてきました。
 しかし，基本的に並列データベースの製品はプロプライエタリであり，
 高いライセンス料金を支払わないと利用できないものでした。
-並列データベースを必要とするほどのデータを持つ人が僅かしかいない時代には，
+並列データベースを必要とするほどのデータを持つ人がわずかしかいない時代には，
 それでよかったのかもしれません。
 
 しかし，時代は変わりました。
