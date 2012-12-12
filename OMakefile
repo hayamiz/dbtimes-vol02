@@ -17,7 +17,7 @@ clean:
   rm -f *.aux *.log *.bbl *.toc *.nav *.fls *.out *.snm *.vrb *.dvi *.blg
 
 clobber: clean
-  rm -f *.pdf
+  rm -f book*.pdf
 
 build: book.dvi book.pdf
 

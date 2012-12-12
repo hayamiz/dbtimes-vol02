@@ -27,3 +27,4 @@
 *.mtc0
 /book*.pdf
 /book-notombo.tex
+/dist/*
