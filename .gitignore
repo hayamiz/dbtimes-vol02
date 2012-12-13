@@ -28,3 +28,5 @@
 /book*.pdf
 /book-notombo.tex
 /dist/*
+/epub/dbtimes-vol02.epub
+/epub/dbtimes-vol02-epub/*
