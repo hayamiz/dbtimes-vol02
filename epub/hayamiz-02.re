@@ -2,7 +2,7 @@
 
 = PgDay 2012 Japan レポート
 
-/raw[|html|<div style="text-align: right">はやみず</div>]
+//raw[|html|<div style="text-align: right">はやみず</div>]
 
 2012年11月30日にNPO法人日本PostgreSQLユーザ会(JPUG)主催で開催されたPgDay 2012 Japanに参加してきました。
 

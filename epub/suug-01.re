@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#@# -*- coding: utf-8 -*-
 
 = DNS その攻撃手法
 

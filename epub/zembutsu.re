@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#@# -*- coding: utf-8 -*-
 
 = Muninは舞い降りた - The Munin has landed -
 

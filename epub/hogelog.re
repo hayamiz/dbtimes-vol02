@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+#@# -*- coding: utf-8 -*-
+
 = C言語、LLVM、クラウド。
 
 //raw[|html|<div style="text-align: right">hogelog</div>]
