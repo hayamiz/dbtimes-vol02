@@ -12,22 +12,22 @@ x:p:h1:h2:h3 = 12px:14px:16px:24px:30px
 * {
 }
 body {
-    margin: 0;
-    padding: 0;
+    margin: 1em;
+    padding: 1em;
     font-size: 1em;
     line-height:1.6;
-    font-family: "ShinGoPro-Regular","ShinGo-Regular", sans-serif;
+    font-family: 'ヒラギノ明朝 ProN W3', 'HiraMinProN-W3', "小塚明朝 Pr6N R", "Kozuka Mincho Pr6N R", serif;
     /*
     word-break: normal;
     -webkit-line-break: after-white-space;
     */
 }
 p, ul, ol, dl, pre, table {
-    font-family: "ShinGo Regular","ShinGo R","新ゴR","新ゴ R", sans-serif;
     font-size: 0.875em;
 }
 /* Heading */
 h1 {
+    font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', "小塚ゴシック Pr6N B", "Kozuka Gothic Pr6N B", sans-serif;
     margin: 0 0 3em;
     padding: 0.5em 0 0;
     border-top: 14px #326450 solid;
@@ -36,6 +36,7 @@ h1 {
     font-weight: bold;
 }
 h2 {
+    font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', "小塚ゴシック Pr6N B", "Kozuka Gothic Pr6N B", sans-serif;
     margin: 3em 0 0.5em;
     padding: 0.5em 0 0;
     border-top: 2px #326450 solid;
@@ -44,6 +45,7 @@ h2 {
     font-weight: bold;
 }
 h3 {
+    font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', "小塚ゴシック Pr6N B", "Kozuka Gothic Pr6N B", sans-serif;
     margin: 3em 0 0.5em;
     padding: 0;
     text-align: left;
@@ -51,6 +53,7 @@ h3 {
     font-weight: bold;
 }
 h4, h5, h6 {
+    font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', "小塚ゴシック Pr6N B", "Kozuka Gothic Pr6N B", sans-serif;
     margin:0.7em 0;
     padding: 0;
     text-align: left;
@@ -204,7 +207,7 @@ div.footnote {
 div.footnote p.footnote {
 	color: #666;
     line-height: 1.6;
-    font-size: 0.75em;
+    font-size: 0.70em;
     text-indent: 0;
 }
 /* Colophon */
