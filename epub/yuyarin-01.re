@@ -285,7 +285,7 @@ origin ASを指定して経路の一覧を取得するときは!gを使う。
 UNIXの場合は!を\でエスケープする必要がある。
 メモリ管理が必要な古のプログラムからでも読みやすいように整形されて表示され、Aはデータの長さ、Cは終了を意味している。
 
-//list[][]{
+//list[whois1][]{
 % whois -m \!gAS7521
 A116
 210.173.160.0/19 210.173.176.0/24 210.173.178.0/25 218.100.45.0/24 (snip)
@@ -294,7 +294,7 @@ C
 
 AS-SETをASの一覧に展開したいときは!iオプションを使う。AS-SETの中にAS-SETが含まれるような場合は,1をつければAS-SETの再帰展開を行うことができる。
 
-//list[][]{
+//list[whois2][]{
 % whois -m \!iAS-GOOGLE,1 
 A126
 AS11344 AS13949 AS1424 AS15169 AS19425 AS22577 AS26910 AS36040 (snip)
@@ -304,7 +304,7 @@ C
 指定したASがメンテナになっているオブジェクトを列挙する場合は!oオプションを使う。
 だいたいこの出力に属性名でgrepをかけて整形して利用する。
 
-//list[][]{
+//list[whois3][]{
 % whois -m \!oMAINT-AS7521 
 A10130
 route:      210.173.160.0/19
@@ -321,7 +321,7 @@ sourceによっては情報が間違っていたりすることがあるので�
 その際には-sオプションを利用して特定のsourceのオブジェクトを取り出す。
 ただしダブルクオーテーションで囲ってwhoisのオプションに間違われないようにする。
 
-//list[][]{
+//list[whois4][]{
 % whois -h jpirr.nic.ad.jp -- "-s JPIRR AS7521"
 aut-num:    AS7521
 as-name:    MFEED
@@ -336,7 +336,7 @@ ISC(Internet Systems Consortium)が開発しているIRRToolSet@<fn>{yu-fn-04}�
 
 pevalはIRR用にwhoisをもっと簡単にしたものである。as-ocn and as-iijのような記述をすればOCNとIIJの両方から広告されているプレフィックスの一覧（OCNとIIJでマルチホーム接続しているASの経路）を取得することができる。
 
-//list[][]{
+//list[peval][]{
 peval "as-ocn"
 ({223.223.164.0/24, 223.223.165.0/24, 223.223.166.0/24, ... })
 peval "as-ocn and as-iij"
@@ -347,7 +347,7 @@ src/peval/peval "as-ocn and as-iij"
 RtConfigはCiscoやJuniperのルータ用のフィルタやstatic routeを生成することができるツールである。
 下の例ではciscoとJuniperのprefixリストを生成している。
 
-//list[][]{
+//list[rtconfig][]{
 % rtconfig -cisco_use_prefix_lists
 rtconfig> @RtConfig access_list filter AS15169
 !
