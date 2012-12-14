@@ -77,8 +77,8 @@ def main(argv)
   end
 
   # convert dash
-  str.gsub!(/---/, "@<raw>#{LBRACE}|html|&mdash;#{RBRACE}")
-  str.gsub!(/--/, "@<raw>#{LBRACE}|html|&ndash;#{RBRACE}")
+  str.gsub!(/---/, "ー")
+  str.gsub!(/--/, "-")
 
   # ruby
   str.gsub!(/\\ruby\{([^\}]+)\}\{([^\}]+)\}/) do |m|
