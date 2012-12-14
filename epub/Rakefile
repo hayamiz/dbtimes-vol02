@@ -16,11 +16,15 @@ RE_FILES = RE_PREDEF + RE_CHAPS + RE_POSTDEF
 CLOBBER.include(EPUB_FILE)
 CLEAN.include(BOOKNAME + "-epub")
 
-task :default => [EPUB_FILE]
+task :default => [:epub]
 
 desc "EPUBファイルを生成"
-file EPUB_FILE => RE_FILES do
+task :epub => RE_FILES + ["_colophon.html"]  do
   sh "rm -f #{EPUB_FILE}"
   sh "rm -rf #{BOOKNAME + "-epub"}"
   sh "review-epubmaker #{CONFIG_FILE}"
+end
+
+file "_colophon.html" => "make-colophon.rb" do
+  sh "ruby ./make-colophon.rb > _colophon.html"
 end
