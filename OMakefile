@@ -10,7 +10,7 @@ DVIPDFMFLAGS = -r 2400 -z 0 # otf-ipaex.map # -f dvipdfm_dl14.map
 # PHONY rules
 #
 
-.PHONY: clean clobber build sample
+.PHONY: clean clobber build sample all
 
 clean:
   rm -f book-notombo.tex
@@ -20,6 +20,8 @@ clobber: clean
   rm -f book*.pdf
 
 build: book.dvi book.pdf
+
+all: book-ready.pdf book-notombo-ready.pdf
 
 sample: dbtimes-vol02-sample.pdf
 
