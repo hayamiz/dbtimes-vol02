@@ -1,10 +1,11 @@
-#@# -*- coding: utf-8 -*-
+
 
 = C言語、LLVM、クラウド。
 
 //raw[|html|<div style="text-align: right">hogelog</div>]
 
 == あなたとわたしとC言語
+
 1969年にOSを記述するためのプログラミング言語として
 産声をあげたC言語は圧倒的な勢いで普及し、
 現在に至ってもあらゆる場面で使われ続けている。
@@ -33,10 +34,11 @@ C言語でその言語処理系の機能を拡張するやり方だ。
 その言語処理系自体のソースコードも読み込まなければいけない。
 C言語で書きたくないからPerlを使っているのに、結局C言語をたくさん読み書きしなければいけない。
 C言語のライブラリを使いたいんだからC言語で書けと言われればそれまでかもしれないけど、
-もうちょっと楽もしたい。@<fn>{hogelog-01}
-//footnote[hogelog-01][PythonのCython、LuaのLuabind、多種の言語に対応するSWIGなど、C言語ライブラリのバインディング作成を支援するツールも多い。]
+もうちょっとラクもしたい@<fn>{hogelog-01-fn-1}。
+//footnote[hogelog-01-fn-1][PythonのCython、LuaのLuabind、多種の言語に対応するSWIGなど、C言語ライブラリのバインディング作成を支援するツールも多い。]
 
 === Powered by libffi
+
 C言語を書きたくない、けど気軽にC言語のライブラリを使いたい。
 Pythonのctypes、Rubyのffi、JavaのJNA、LuaのAlien、Mozillaのjs-ctypesなどは
 まさにその要求に応えるものだ。
@@ -55,6 +57,7 @@ libffiが成熟して
 書けることを喜ぶ人は、どうやら多いようだ。
 
 === Powered by LLVM
+
 先に示したような方法でC言語の機能を活用できる言語処理系は
 仮にその言語の機能やライブラリに不足があっても、
 C言語と混ぜ込んで使ってしまえばだいたいどんなアプリケーションでも作れてしまう。
@@ -62,9 +65,6 @@ C言語と混ぜ込んで使ってしまえばだいたいどんなアプリケ�
 ブラウザ上で動作するFlashとJavaScript実行環境だ。
 Flash・JavaScript環境ではネイティブ環境にアクセスすることは
 基本的に許可されていない。
-%標準ライブラリ・サードパティライブラリ共に巨大な
-%Java環境ですら、
-%時にはC言語ライブラリの助けを必要とするのだ。
 
 「ブラウザ内で、ポータブルに動作する」という
 得難い特性のため、
@@ -76,16 +76,11 @@ Flash・JavaScript環境ではネイティブ環境にアクセスすること�
 そしてそれは全く夢物語などではないし、
 もはや現実的な選択肢としてそこにある。
 
-% ActiveX, Google Native Client, PNaCl
-
-=== Powered by LLVM % Adobe Flascc (Alchemy), Emscripten
-%Last week, Scott Petersen from Adobe gave a talk at Mozilla on a toolchain he’s been creating--soon to be open-sourced--that allows C code to be targeted to the Tamarin virtual machine.
-%``先週AdobeのScott PetersonがMozillaに来て、彼が作っているCで書いたコードをTamarin VMコードにコンパイルするツールについて語ってくれたんだ。''
-2008年の7月、Mozillaで働くエンジニアAtul Varmaが
+=== Powered by LLVM
+ 2008年の7月、Mozillaで働くエンジニアAtul Varmaが
 AdobeのScott Petersenが作ったツール
-についてのエントリを自身のブログに投稿した。
-@<fn>{hogelog-02}
-----後にAdobe Alchemy、そしてAdobe Flasccと名前を変え
+についてのエントリを自身のブログに投稿した@<fn>{hogelog-01-fn-2}。
+ー後にAdobe Alchemy、そしてAdobe Flasccと名前を変え
 Adobe Flashの主力機能の一つとして語られるようになるツールの世間への初めての露出である。
 このツールはC言語かC++で書かれたプログラムを
 AVM2(ActionScript Virtual Machine 2)のバイトコードへと変換し、
@@ -105,9 +100,10 @@ LLVMというオープンなコンパイラ基盤が成熟した現在だから�
 ウェブアプリケーションに組み込むことも可能である。
 C言語の豊富なソフトウェア資産はここにきて
 Flash、ブラウザJavaScript環境をもその活躍の舞台を広げたのである。
-//footnote[hogelog-02][http://www.toolness.com/wp/2008/07/running-c-and-python-code-on-the-web/]
+//footnote[hogelog-01-fn-2][@<href>{http://www.toolness.com/wp/2008/07/running-c-and-python-code-on-the-web/}]
 
 === クラウド時代のC言語
+
 クラウド時代と呼ばれる現代、ソフトウェアは様々な環境で動作する。
 汎用コンピュータ環境、Android環境、iOS環境、Flash環境、ブラウザJavaScript環境、
 マイコン、他諸々。

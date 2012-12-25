@@ -230,7 +230,12 @@ def main(argv)
 
   # ruby
   str.gsub!(/\\ruby\{([^\}]+)\}\{([^\}]+)\}/) do |m|
-    "@<ruby>{#{$1},#{$2}}"
+    "@<ruby>#{LBRACE}#{$1},#{$2}#{RBRACE}"
+  end
+
+  # bou
+  str.gsub!(/\\url\{([^\}]+)\}/) do |m|
+    "@<href>#{LBRACE}#{$1}#{RBRACE}"
   end
 
   # bou
