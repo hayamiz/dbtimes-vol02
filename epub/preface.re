@@ -9,3 +9,7 @@ The Database Times vol.2 をお手にとっていただきありがとうござ�
 その一端を，本書を通して楽しんで頂ければ幸いです。
 
 //raw[|html|<div style="text-align: right">2012年 12月<br/>Hotchpotch Society</div>]
+
+== 謝辞
+
+本書のEPUB版およびKindle版は，電子出版システム@<href>{https://github.com/kmuto/review,ReVIEW}を用いて作成されました。@<href>{https://github.com/kmuto/review,ReVIEW}開発チームの皆様にこの場を借りて御礼申し上げます。
