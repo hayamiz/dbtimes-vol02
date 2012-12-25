@@ -4,6 +4,7 @@
 # TeX article file convertor
 
 require 'optparse'
+require 'uri'
 
 def parse_args(argv)
   opt = Hash.new
@@ -36,11 +37,138 @@ end
 LBRACE = "!!!LBRACE!!!"
 RBRACE = "!!!RBRACE!!!"
 
+
+# document specific conversion rules
+
+def do_adhoc(str)
+  str.gsub!(/^\\cleardoublepage$/, "")
+  str.gsub!(/^\\plainifnotempty$/, "")
+  str.gsub!(/^\\small$/, "")
+  str.gsub!(/^\\normalsize$/, "")
+  str.gsub!(/^\\centering$/, "")
+
+  # URL
+  str.gsub!(/\\verb\|(.+?)\|/) do |m|
+    s = $1
+    if s =~ URI.regexp
+      s
+    else
+      m
+    end
+  end
+
+  text_pairs = {
+    %! \\vspace*{-0.1\\Cvs}! => "",
+    %!$10^{12} = 1 \\mathrm{TB}$! => %!@<raw>#{LBRACE}|html|10<sup>12</sup>#{RBRACE}=1TB!,
+    %!$\\exists, \\forall$! => %!@<raw>#{LBRACE}|html|&exist;, &forall;#{RBRACE}!,
+    %!$\\lnot,\\land,\\lor$! => %!@<raw>#{LBRACE}|html|&not;,&and;,&or;#{RBRACE}!,
+    %!$>$! => %!@<raw>#{LBRACE}|html|&gt;#{RBRACE}!,
+    %!$<$! => %!@<raw>#{LBRACE}|html|&lt;#{RBRACE}!,
+    %!B$^+$! => %!@<raw>#{LBRACE}|html|B<sup>+</sup>#{RBRACE}!,
+    %!\\paragraph{Step 4.} \\ ! => %!\\paragraph{Step 4.}!,
+    %!\\verb|http://s2k-ftp.cs.berkeley.edu/ingres/|! => %!http://s2k-ftp.cs.berkeley.edu/ingres/!,
+    %!\\verb|pc<code.size()|! => %!@<tt>#{LBRACE}pc<code.size()#{RBRACE}!,
+    %!\\verb|c|! => %!@<tt>#{LBRACE}c#{RBRACE}!,
+    %!\\verb|m|! => %!@<tt>#{LBRACE}m#{RBRACE}!,
+    %!\\verb|z|! => %!@<tt>#{LBRACE}z#{RBRACE}!,
+    %!$n$! => %!n!,
+    %!$\\mathrm{O}(1)$! => %!O(1)!,
+    %!$\\mathrm{O}(n)$! => %!O(n)!,
+  }
+
+  text_pairs.each do |k,v|
+    regex = Regexp.compile(Regexp.quote(k))
+    str.gsub!(regex, v)
+  end
+
+  str.gsub!(/^\s*\\begin\{lstlisting\}\n((?:.|\n)*?)\n\s*\\end\{lstlisting\}\n/) do |m|
+    "//emlist{\n" + $1 + "\n//}\n"
+  end
+
+  str.gsub!(/^\s*\\(begin|end)\{(minipage|center|figure)\}.*$/, "")
+
+  img_refs = Hash.new
+  str.gsub!(/^\s*\\includegraphics(?:\[.*?\])?\{(.+?)\}[\s\n]*\\caption\{(.+?)\}[\s\n]*\\label\{(.+?)\}/) do |m|
+    imgfile = $1.strip
+    caps = $2.strip
+    label = $3.strip
+    if imgfile =~ /\.eps\Z/
+      imgfile = File.basename(imgfile, ".eps")
+      img_refs[label.strip] = imgfile
+      "\n//image[#{imgfile}][#{caps}]{\n//}\n"
+    elsif imgfile =~ /\.pdf\Z/
+      imgfile = File.basename(imgfile, ".pdf")
+      img_refs[label.strip] = imgfile
+      "\n//image[#{imgfile}][#{caps}]{\n//}\n"
+    else
+      m
+    end
+  end
+
+  str.gsub!(/^\s*\\includegraphics(?:\[.*?\])?\{(.+?)\}[\s\n]*\\caption\{(.+?)\}/) do |m|
+    imgfile = File.basename($1.strip)
+    caps = $2.strip
+    imgfile.gsub!(/\.\w+\Z/, "")
+    "\n//image[#{imgfile}][#{caps}]{\n//}\n"
+  end
+
+  str.gsub!(/図\s*\\ref\{([^\}]*)\}/) do |m|
+    "@<img>#{LBRACE}#{img_refs[$1.strip] || $1.strip}#{RBRACE}"
+  end
+
+  str.gsub!(/^\s*\\begin\{enumerate\}((?:.|\n)*)\s*\\end\{enumerate\}/) do |m|
+    block = $1
+    idx = 0
+    if block =~ /\\begin/
+      block
+    else
+      items = block.strip.split(/\\item\s*/).select{|s| s.size > 0}
+      items_str = "\n"
+      items.each do |item|
+        items_str += "  " + (idx += 1).to_s + ". " + item.gsub(/\n\s*/,"").strip + "\n"
+      end
+      items_str
+    end
+  end
+
+  str.gsub!(/^\s*\\begin\{itemize\}((?:.|\n)*)\s*\\end\{itemize\}/) do |m|
+    block = $1
+    if block =~ /\\begin/
+      block
+    else
+      items = block.strip.split(/\\item\s*/).select{|s| s.size > 0}
+      items_str = "\n"
+      items.each do |item|
+        items_str += "  * " + item.gsub(/\n\s*/,"").strip + "\n"
+      end
+      items_str
+    end
+  end
+
+  # brainfuck
+  str.gsub!(/\\verb\|([-+><,\.\[\] ]+)\|/) do |m|
+    %!@<tt>#{LBRACE}#{$1}#{RBRACE}!
+  end
+
+  # file url in hoge.tex
+  str.gsub!(/\{\\scriptsize((?:.|\n)+?)\}/) do |m|
+    s = $~[1].strip
+    if s.strip =~ URI.regexp && s == $~[0]
+      s
+    else
+      m
+    end
+  end
+
+  str
+end
+
 def main(argv)
   opt = parse_args(argv)
 
   tex_file = opt[:file]
   basename = File.basename(tex_file, ".tex")
+  $prefix = basename + "-"
 
   str = File.read(tex_file)
 
@@ -48,8 +176,13 @@ def main(argv)
   str.gsub!(/^%.*\n?/, "")
   str.gsub!(/((?!\\).)%.*\n?/, "\\1")
 
-  # make chapter/section/subsection an independent block
-  str.gsub!(/(\\(?:chapter|(?:sub)*section))\{(.*)\}/) do |m|
+  str = do_adhoc(str)
+
+  # noindent
+  str.gsub!(/^\\noindent\s*/, "//noindent\n")
+
+  # make chapter/section/subsection/paragraph an independent block
+  str.gsub!(/(\\(?:chapter|(?:sub)*section|paragraph))\*?\s*\{(.*)\}/) do |m|
     case $1
     when "\\chapter"
       prefix = "= "
@@ -59,6 +192,8 @@ def main(argv)
       prefix = "=== "
     when "\\subsubsection"
       prefix = "==== "
+    when "\\paragraph"
+      prefix = "===== "
     else
       raise RuntimeError.new
     end
@@ -66,11 +201,24 @@ def main(argv)
     "\n" + prefix + $2 + "\n"
   end
 
+  # remove lettrine
+  str.gsub!(/\\lettrine\{(.+)\}\s*(?:(\\\s+)*)/, "\\1")
+
   # remove umlaut
-  str.gsub!(/\\"{(.)}/) do |m|
+  str.gsub!(/\\"\{(.)\}/) do |m|
     case $1
     when "o"
       "@<raw>#{LBRACE}|html|&ouml;#{RBRACE}"
+    else
+      raise RuntimeError.new
+    end
+  end
+  str.gsub!(/\\"(.)/) do |m|
+    case $1
+    when "o"
+      "@<raw>#{LBRACE}|html|&ouml;#{RBRACE}"
+    when "u"
+      "@<raw>#{LBRACE}|html|&uuml;#{RBRACE}"
     else
       raise RuntimeError.new
     end
@@ -85,6 +233,40 @@ def main(argv)
     "@<ruby>{#{$1},#{$2}}"
   end
 
+  # bou
+  str.gsub!(/\\bou\{([^\}]+)\}/) do |m|
+    "@<bou>{#{$1}}"
+  end
+
+  # bf
+  str.gsub!(/\{\\bf([^\}]*)\}/) do |m|
+    "@<b>#{LBRACE}#{$1.strip}#{RBRACE}"
+  end
+  str.gsub!(/\\textbf\{([^\}]*)\}/) do |m|
+    "@<b>#{LBRACE}#{$1.strip}#{RBRACE}"
+  end
+
+  # em
+  str.gsub!(/\{\\em([^\}]*)\}/) do |m|
+    "@<em>#{LBRACE}#{$1.strip}#{RBRACE}"
+  end
+
+  # tt
+  str.gsub!(/\{\\tt([^\}]*)\}/) do |m|
+    "@<tt>#{LBRACE}#{$1.strip}#{RBRACE}"
+  end
+
+  # it
+  str.gsub!(/\{\\it([^\}]*)\}/) do |m|
+    "@<i>#{LBRACE}#{$1.strip}#{RBRACE}"
+  end
+
+  # line break
+  str.gsub!(/\\\\\n\s+/) do |m|
+    "@<br>#{LBRACE}#{RBRACE} "
+  end
+
+
   # double quote
   str.gsub!(/``([^']*)''/) do |m|
     "@<raw>#{LBRACE}|html|&ldquo;#{RBRACE}" + $1 + "@<raw>#{LBRACE}|html|&rdquo;#{RBRACE}"
@@ -94,8 +276,8 @@ def main(argv)
     "@<raw>#{LBRACE}|html|&ldquo;#{RBRACE}" + $1 + "@<raw>#{LBRACE}|html|&rdquo;#{RBRACE}"
   end
 
-  # remove escape of %/_
-  str.gsub!(/\\(%|_)/, "\\1")
+  # remove escape of %/_/#/TeX/LaTeX
+  str.gsub!(/\\(%|_|#|TeX|LaTeX)/, "\\1")
 
   # footnote
   blocks = str.split(/\n\n+/)
