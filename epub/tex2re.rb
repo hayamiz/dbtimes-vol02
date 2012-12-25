@@ -74,6 +74,9 @@ def do_adhoc(str)
     %!$n$! => %!n!,
     %!$\\mathrm{O}(1)$! => %!O(1)!,
     %!$\\mathrm{O}(n)$! => %!O(n)!,
+    %!$\\beta$! => %!@<raw>#{LBRACE}|html|&beta;#{RBRACE}!,
+    %!$t$! => %!t!,
+    %![$^{11}$C]! => %!@<raw>#{LBRACE}|html|[<sup>11</sup>C]#{RBRACE}!,
   }
 
   text_pairs.each do |k,v|
@@ -83,6 +86,10 @@ def do_adhoc(str)
 
   str.gsub!(/^\s*\\begin\{lstlisting\}\n((?:.|\n)*?)\n\s*\\end\{lstlisting\}\n/) do |m|
     "//emlist{\n" + $1 + "\n//}\n"
+  end
+
+  str.gsub!(/^\s*\\begin\{quote\}\n((?:.|\n)*?)\n\s*\\end\{quote\}\n/) do |m|
+    "//quote{\n" + $1 + "\n//}\n"
   end
 
   str.gsub!(/^\s*\\(begin|end)\{(minipage|center|figure)\}.*$/, "")
