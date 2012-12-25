@@ -53,7 +53,7 @@ John Naisbittが @<raw>{|html|&ldquo;}We are drowning in information but starved
 
 == データマイニング再考
 
-まずはJerome H. Friedmanの``Data mining and Statistics: What's the connection?''(1997)を下敷きにして、データマイニングとは何であるのかを掘り下げてみよう。
+まずはJerome H. Friedmanの@<raw>{|html|&ldquo;}Data mining and Statistics: What's the connection?@<raw>{|html|&rdquo;}(1997)を下敷きにして、データマイニングとは何であるのかを掘り下げてみよう。
 
 === データマイニングとデータベース
 
