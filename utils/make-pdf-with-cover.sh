@@ -12,9 +12,14 @@ tmp_dir=`mktemp -d`
 #
 pdftk A=$top_dir/cover-half.pdf B=$top_dir/book-notombo-ready.pdf cat A B output $dist_dir/dbtimes-vol02.pdf
 
+#
+# make EPUB
+#
+(cd $top_dir/epub; rake) || exit 1
+cp $top_dir/epub/dbtimes-vol02.epub $dist_dir/ || exit 1
 
 #
-# make sample images for melonbooks DL
+# make sample images
 #
 if ! [ -d $dist_dir/samples ]; then
     mkdir $dist_dir/samples
@@ -34,8 +39,9 @@ wait
 # make zip file for melonbooks DL
 #
 cd $tmp_dir
-mkdir -p dbtimes-vol02/product
-cp $dist_dir/dbtimes-vol02.pdf dbtimes-vol02/product/1.pdf
+mkdir -p dbtimes-vol02/
+cp $dist_dir/dbtimes-vol02.pdf dbtimes-vol02/
+cp $dist_dir/dbtimes-vol02.epub dbtimes-vol02/
 zip -r dbtimes-vol02.zip dbtimes-vol02/
 mv dbtimes-vol02.zip $dist_dir/
 cd -
